@@ -22,7 +22,7 @@ RUN docker-php-ext-install pdo_mysql \
 COPY docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY docker/config/php/php.ini /usr/local/etc/php/php.ini
 COPY docker/start.sh /usr/local/bin/start
-COPY . /var/www/html
+COPY ./application /var/www/html
 
 # Set working dir
 WORKDIR /var/www/html/

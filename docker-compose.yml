@@ -1,1 +1,18 @@
 version: '3'
+
+services:
+    app:
+        image: lamp-env
+        container_name: saasrv-app
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        volumes:
+            - ./application:/var/www/html
+        ports:
+            - 8888:80
+        networks:
+            - localnet
+networks:
+    localnet:
+        driver: 'bridge'
