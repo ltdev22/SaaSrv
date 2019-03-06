@@ -1,1 +1,49 @@
 version: '3'
+
+services:
+    app:
+        image: lamp-env
+        container_name: saasrv-app
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        volumes:
+            - ./application:/var/www/html
+        ports:
+            - 8888:80
+        networks:
+            - localnet
+        depends_on:
+            - mysql
+    queue:
+        image: lamp-env
+        container_name: saasrv-queue
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        environment:
+            CONTAINER_ROLE: queue
+        networks:
+            - localnet
+        volumes:
+            - ./application:/var/www/html
+        depends_on:
+            - mysql
+    mysql:
+        image: mysql:5.7
+        container_name: saasrv-mysql
+        volumes:
+            - dbdata:/var/lib/mysql
+        ports:
+            - 3306:3306
+        networks:
+            - localnet
+        env_file:
+            - ./application/.env
+
+volumes:
+    dbdata:
+        driver: 'local'
+networks:
+    localnet:
+        driver: 'bridge'
