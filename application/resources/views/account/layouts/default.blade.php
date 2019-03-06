@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="col-md-3">
+<div class="row account-wrapper">
+    <div class="col-md-3 account-navigation">
         @include('account.layouts.partials._navigation')
-    </div>
-    <div class="col-md-9">
+    </div><!-- /.account-navigation -->
+    <div class="col-md-9 account-content">
         @yield('account.content')
-    </div>
-</div>
+    </div><!-- /.account-content -->
+</div><!-- /.account-wrapper -->
 @endsection

@@ -25,9 +25,9 @@
         @include('layouts.partials._navigation')
 
         <main class="py-4">
-            <div class="container">
+            <div class="container app-container">
                 @yield('content')
-            </div>
+            </div><!-- /.app-container -->
         </main>
     </div>
 </body>
