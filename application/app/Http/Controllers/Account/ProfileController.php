@@ -4,6 +4,7 @@ namespace SaaSrv\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
+use SaaSrv\Http\Requests\Account\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -22,8 +23,13 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(ProfileUpdateRequest $request)
     {
-        dd('Update');
+        $request->user()->update($request->only([
+            'name',
+            'email',
+        ]));
+
+        return back();
     }
 }
