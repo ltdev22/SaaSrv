@@ -15,6 +15,20 @@ services:
             - localnet
         depends_on:
             - mysql
+    queue:
+        image: lamp-env
+        container_name: saasrv-queue
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        environment:
+            CONTAINER_ROLE: queue
+        networks:
+            - localnet
+        volumes:
+            - ./application:/var/www/html
+        depends_on:
+            - mysql
     mysql:
         image: mysql:5.7
         container_name: saasrv-mysql
