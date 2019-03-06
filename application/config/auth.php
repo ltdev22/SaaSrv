@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => SaaSrv\User::class,
+            'model' => SaaSrv\Models\User::class,
         ],
 
         // 'users' => [

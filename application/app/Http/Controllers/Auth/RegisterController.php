@@ -2,7 +2,7 @@
 
 namespace SaaSrv\Http\Controllers\Auth;
 
-use SaaSrv\User;
+use SaaSrv\Models\User;
 use SaaSrv\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
