@@ -31,7 +31,10 @@
                     @endif
                 </div>
                 
-                <button type="submit" class="btn btn-danger">Change Password</button>
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-lock"></i>
+                    Change Password
+                </button>
             </form>
         </div>
     </div><!-- /.panel-profile -->
