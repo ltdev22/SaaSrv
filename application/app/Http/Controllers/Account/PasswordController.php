@@ -4,8 +4,10 @@ namespace SaaSrv\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use SaaSrv\Http\Controllers\Controller;
 use SaaSrv\Http\Requests\Account\PasswordUpdateRequest;
+use SaaSrv\Mail\Account\PasswordUpdated;
 
 class PasswordController extends Controller
 {
@@ -27,9 +29,15 @@ class PasswordController extends Controller
      */
     public function update(PasswordUpdateRequest $request)
     {
+        // Update the password
         $request->user()->update([
             'password' => Hash::make($request->password),
         ]);
+
+        // Notify user via email that the password has changed
+        Mail::to($request->user())->send(
+            new PasswordUpdated($request->user())
+        );
 
         return redirect()->route('account.index');
     }
