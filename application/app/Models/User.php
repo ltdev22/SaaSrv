@@ -4,10 +4,12 @@ namespace SaaSrv\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use SaaSrv\Models\Traits\HasConfirmationTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,
+        HasConfirmationTokens;
 
     /**
      * The attributes that are mass assignable.

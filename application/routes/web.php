@@ -16,3 +16,8 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     Route::get('/password', 'Account\PasswordController@index')->name('password.index');
     Route::patch('/password', 'Account\PasswordController@update')->name('password.update');
 });
+
+Route::get('/token', function() {
+    $token = auth()->user()->confirmationToken();
+    dd($token);
+});
