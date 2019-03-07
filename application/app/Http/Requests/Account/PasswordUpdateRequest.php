@@ -3,8 +3,9 @@
 namespace SaaSrv\Http\Requests\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SaaSrv\Rules\CurrentPassword;
 
-class ProfileUpdateRequest extends FormRequest
+class PasswordUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,8 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'  => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
+            'password_current' => ['required', new CurrentPassword()],
+            'password' => 'required|string|min:6|confirmed',
         ];
     }
 }

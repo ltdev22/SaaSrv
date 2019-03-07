@@ -19,8 +19,9 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the account profile.
+     * Update the account profile.
      *
+     * @param \SaaSrv\Http\Requests\Account\ProfileUpdateRequest    $request
      * @return \Illuminate\Http\Response
      */
     public function update(ProfileUpdateRequest $request)
