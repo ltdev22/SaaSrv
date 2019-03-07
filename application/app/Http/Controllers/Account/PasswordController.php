@@ -39,6 +39,6 @@ class PasswordController extends Controller
             new PasswordUpdated($request->user())
         );
 
-        return redirect()->route('account.index');
+        return redirect()->route('account.index')->withSuccess('Your password has been successfully updated.');
     }
 }

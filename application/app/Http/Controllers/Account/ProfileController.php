@@ -31,6 +31,6 @@ class ProfileController extends Controller
             'email',
         ]));
 
-        return back();
+        return back()->withSuccess('Your profile has been successfully updated.');
     }
 }
