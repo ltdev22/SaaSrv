@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -68,5 +68,27 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * The user has been registered.
+     * 
+     * Overwrite from RegistersUsers
+     * We need to force logout the new user in order to activate the account.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     * @see \Illuminate\Foundation\Auth\RegistersUsers
+     */
+    protected function registered(\Illuminate\Http\Request $request, $user)
+    {
+        // Log the user out
+        $this->guard()->logout();
+
+        // todo Send email to the registered user
+
+        return redirect($this->redirectPath())
+                ->withSuccess('Your account has been created. Please check your email for an activation link');
     }
 }
