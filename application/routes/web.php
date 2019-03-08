@@ -2,7 +2,10 @@
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+});
 
 /* Account */
 Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.'], function() {
@@ -17,6 +20,7 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     Route::patch('/password', 'Account\PasswordController@update')->name('password.update');
 });
 
+/* Activation */
 Route::group(['prefix' => 'activation', 'as' => 'activation.'], function() {
     // Whenever we receive a confirmationToken in the url we need to resolve this to a ConfirmationToken model
     // @see RouteServiceProvider
