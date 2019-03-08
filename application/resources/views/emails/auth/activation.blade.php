@@ -8,9 +8,7 @@ Thank you for signing up and welcome to {{ config('app.name') }}!
 In order to get benefit from our services you will need to activate your account 
 simply by clicking the button bellow.
 
-Token is {{ $token }}
-
-@component('mail::button', ['url' => $token])
+@component('mail::button', ['url' => route('activation.activate', $token)])
 Activate
 @endcomponent
 

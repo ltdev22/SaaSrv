@@ -22,6 +22,7 @@ class PasswordUpdated extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      *
+     * @param \SaaSrv\Models\User   $user
      * @return void
      */
     public function __construct(User $user)
