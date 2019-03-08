@@ -28,4 +28,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Set custom timestamps as Carbon instances.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'activated_at',
+    ];
 }
