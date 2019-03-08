@@ -7,6 +7,7 @@ use SaaSrv\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use SaaSrv\Events\Auth\UserHasSignedUp;
 
 class RegisterController extends Controller
 {
@@ -86,7 +87,8 @@ class RegisterController extends Controller
         // Log the user out
         $this->guard()->logout();
 
-        // todo Send email to the registered user
+        // Send email to the registered user
+        event(new UserHasSignedUp($user));
 
         return redirect($this->redirectPath())
                 ->withSuccess('Your account has been created. Please check your email for an activation link');

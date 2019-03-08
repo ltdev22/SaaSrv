@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'SaaSrv\Events\Event' => [
-            'SaaSrv\Listeners\EventListener',
+        'SaaSrv\Events\Auth\UserHasSignedUp' => [
+            'SaaSrv\Listeners\Auth\SendActivationEmail',
         ],
     ];
 
