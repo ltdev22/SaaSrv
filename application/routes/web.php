@@ -20,8 +20,8 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     Route::patch('/password', 'Account\PasswordController@update')->name('password.update');
 });
 
-/* Activation */
-Route::group(['prefix' => 'activation', 'as' => 'activation.'], function() {
+/* Activation activation */
+Route::group(['prefix' => 'activation', 'as' => 'activation.', 'middleware' => ['guest', 'confirmationToken.expired:/']], function() {
     // Whenever we receive a confirmationToken in the url we need to resolve this to a ConfirmationToken model
     // @see RouteServiceProvider
     Route::get('/{confirmationToken}', 'Auth\ActivationController@activate')->name('activate');

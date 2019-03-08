@@ -6,7 +6,7 @@ use SaaSrv\Mail\Auth\ActivationEmail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendActivationEmail //implements ShouldQueue
+class SendActivationEmail implements ShouldQueue
 {
     /**
      * Handle the event.
