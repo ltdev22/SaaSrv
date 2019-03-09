@@ -40,4 +40,24 @@ class User extends Authenticatable
     protected $dates = [
         'activated_at',
     ];
+
+    /**
+     * Has the user been activated?
+     *
+     * @return bool
+     */
+    public function hasBeenActivated(): bool
+    {
+        return !is_null($this->activated_at);
+    }
+
+    /**
+     * Has the user not been activated?
+     *
+     * @return bool
+     */
+    public function hasNotBeenActivated(): bool
+    {
+        return !$this->hasBeenActivated();
+    }
 }

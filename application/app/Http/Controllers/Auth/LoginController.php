@@ -36,4 +36,25 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * The user has been authenticated.
+     *
+     * Overwrite from AuthenticatesUsers
+     * If the user has not activated his account yet, we would need to force
+     * logout him in order to activate it first.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     * @see \Illuminate\Foundation\Auth\AuthenticatesUsers
+     */
+    protected function authenticated(\Illuminate\Http\Request $request, $user)
+    {
+        if ($user->hasNotBeenActivated()) {
+            $this->guard()->logout();
+
+            return back()->withError('Your account has not been activated.');
+        }
+    }
 }
