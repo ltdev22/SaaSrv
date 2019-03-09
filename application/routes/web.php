@@ -21,7 +21,9 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
 });
 
 /* Activation activation */
-Route::group(['prefix' => 'activation', 'as' => 'activation.', 'middleware' => ['guest', 'confirmationToken.expired:/']], function() {
+Route::group(['prefix' => 'activation', 'as' => 'activation.'], function() {
+    Route::get('/resend', 'Auth\ActivationResendController@index')->name('resend');
+
     // Whenever we receive a confirmationToken in the url we need to resolve this to a ConfirmationToken model
     // @see RouteServiceProvider
     Route::get('/{confirmationToken}', 'Auth\ActivationController@activate')->name('activate');
