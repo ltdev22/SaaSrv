@@ -23,6 +23,7 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
 /* Activation activation */
 Route::group(['prefix' => 'activation', 'as' => 'activation.'], function() {
     Route::get('/resend', 'Auth\ActivationResendController@index')->name('resend');
+    Route::post('/resend', 'Auth\ActivationResendController@send')->name('resend.send');
 
     // Whenever we receive a confirmationToken in the url we need to resolve this to a ConfirmationToken model
     // @see RouteServiceProvider
