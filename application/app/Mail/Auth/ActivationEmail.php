@@ -1,6 +1,6 @@
 <?php
 
-namespace SaaSrv\Mail\Account;
+namespace SaaSrv\Mail\Auth;
 
 use SaaSrv\Models\User;
 use Illuminate\Bus\Queueable;
@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PasswordUpdated extends Mailable implements ShouldQueue
+class ActivationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,6 +20,13 @@ class PasswordUpdated extends Mailable implements ShouldQueue
     public $user;
 
     /**
+     * The generated confirmation token.
+     *
+     * @var string
+     */
+    public $token;
+
+    /**
      * Create a new message instance.
      *
      * @param \SaaSrv\Models\User   $user
@@ -28,6 +35,7 @@ class PasswordUpdated extends Mailable implements ShouldQueue
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->token = $user->generateConfirmationToken();
     }
 
     /**
@@ -37,8 +45,8 @@ class PasswordUpdated extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('support@saasrv.com')
-                    ->subject('Account activity: Passowrd updated')
-                    ->markdown('emails.account.password.updated');
+        return $this->from('hello@saasrv.dev')
+                    ->subject('Activate your account')
+                    ->markdown('emails.auth.activation');
     }
 }

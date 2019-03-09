@@ -59,5 +59,7 @@ class Kernel extends HttpKernel
         'guest' => \SaaSrv\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        'confirmationToken.expired' => \SaaSrv\Http\Middleware\ChecksExpiredConfirmationTokens::class,
     ];
 }

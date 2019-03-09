@@ -2,7 +2,10 @@
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+});
 
 /* Account */
 Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.'], function() {
@@ -15,4 +18,14 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     /* Password */
     Route::get('/password', 'Account\PasswordController@index')->name('password.index');
     Route::patch('/password', 'Account\PasswordController@update')->name('password.update');
+});
+
+/* Activation account */
+Route::group(['prefix' => 'activation', 'as' => 'activation.', 'middleware' => ['guest']], function() {
+    Route::get('/resend', 'Auth\ActivationResendController@index')->name('resend');
+    Route::post('/resend', 'Auth\ActivationResendController@send')->name('resend.send');
+
+    // Whenever we receive a confirmationToken in the url we need to resolve this to a ConfirmationToken model
+    // @see RouteServiceProvider
+    Route::get('/{confirmationToken}', 'Auth\ActivationController@activate')->name('activate');
 });

@@ -7,6 +7,7 @@ use SaaSrv\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use SaaSrv\Events\Auth\UserHasSignedUp;
 
 class RegisterController extends Controller
 {
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -67,6 +68,30 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'activated_at' => null,
         ]);
+    }
+
+    /**
+     * The user has been registered.
+     * 
+     * Overwrite from RegistersUsers
+     * We need to force logout the new user in order to activate the account.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     * @see \Illuminate\Foundation\Auth\RegistersUsers
+     */
+    protected function registered(\Illuminate\Http\Request $request, $user)
+    {
+        // Log the user out
+        $this->guard()->logout();
+
+        // Send email to the registered user
+        event(new UserHasSignedUp($user));
+
+        return redirect($this->redirectPath())
+                ->withSuccess('Your account has been created. Please check your email for an activation link');
     }
 }
