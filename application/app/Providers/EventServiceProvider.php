@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'SaaSrv\Events\Auth\UserHasSignedUp' => [
             'SaaSrv\Listeners\Auth\SendActivationEmail',
         ],
+        'SaaSrv\Events\Auth\UserRequestedActivationEmailAgain' => [
+            'SaaSrv\Listeners\Auth\SendActivationEmail',
+        ],
     ];
 
     /**

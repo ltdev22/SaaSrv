@@ -20,8 +20,8 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     Route::patch('/password', 'Account\PasswordController@update')->name('password.update');
 });
 
-/* Activation activation */
-Route::group(['prefix' => 'activation', 'as' => 'activation.'], function() {
+/* Activation account */
+Route::group(['prefix' => 'activation', 'as' => 'activation.', 'middleware' => ['guest']], function() {
     Route::get('/resend', 'Auth\ActivationResendController@index')->name('resend');
     Route::post('/resend', 'Auth\ActivationResendController@send')->name('resend.send');
 

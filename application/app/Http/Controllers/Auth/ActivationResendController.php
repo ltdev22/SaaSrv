@@ -6,6 +6,7 @@ use SaaSrv\Models\User;
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
 use SaaSrv\Http\Requests\Auth\ActivateResendRequest;
+use SaaSrv\Events\Auth\UserRequestedActivationEmailAgain;
 
 class ActivationResendController extends Controller
 {
@@ -24,7 +25,7 @@ class ActivationResendController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (optional($user)->hasNotBeenActivated()) {
-            // send
+            event(new UserRequestedActivationEmailAgain($user));
         }
 
         return redirect()->route('login')->withSuccess('A new activation email has been sent to you.');
