@@ -67,7 +67,7 @@ class User extends Authenticatable
      * @param  string  $token
      * @return void
      */
-    public function sendPasswordResetNotification(string $token)
+    public function sendPasswordResetNotification($token)
     {
         $this->notify(new \SaaSrv\Notifications\MailResetPasswordNotification($token));
     }
