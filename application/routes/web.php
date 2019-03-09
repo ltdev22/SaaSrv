@@ -29,3 +29,8 @@ Route::group(['prefix' => 'activation', 'as' => 'activation.', 'middleware' => [
     // @see RouteServiceProvider
     Route::get('/{confirmationToken}', 'Auth\ActivationController@activate')->name('activate');
 });
+
+/* Subscription Plans */
+Route::group(['prefix' => 'plans', 'as' => 'plans.'], function() {
+    Route::get('/', 'Subscription\PlansController@index')->name('index');
+});
