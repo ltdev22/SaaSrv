@@ -60,4 +60,15 @@ class User extends Authenticatable
     {
         return !$this->hasBeenActivated();
     }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification(string $token)
+    {
+        $this->notify(new \SaaSrv\Notifications\MailResetPasswordNotification($token));
+    }
 }

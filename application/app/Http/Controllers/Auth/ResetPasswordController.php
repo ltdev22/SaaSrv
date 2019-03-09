@@ -36,4 +36,24 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    /**
+     * Get the response for a successful password reset.
+     *
+     * Overwrite from ResetsPasswords trait.
+     * We need to force logout non-active users when reseting their passwords.
+     *
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @see \Illuminate\Foundation\Auth\ResetsPasswords;
+     */
+    protected function sendResetResponse($response)
+    {
+        if ($this->guard()->user()->hasNotBeenActivated()) {
+            $this->guard()->logout();
+        }
+
+        return redirect($this->redirectPath())
+                            ->withSuccess(trans($response));
+    }
 }
