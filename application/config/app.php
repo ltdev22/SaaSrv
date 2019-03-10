@@ -161,6 +161,7 @@ return [
         SaaSrv\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         SaaSrv\Providers\StripeServiceProvider::class,
+        SaaSrv\Providers\BladeServiceProvider::class,
 
     ],
 

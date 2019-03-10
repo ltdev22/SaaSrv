@@ -12,17 +12,25 @@
 
 <hr>
 
-<ul class="nav nav-pills nav-fill flex-column">
-    <li class="nav-item">
-        <a href="#" class="nav-link">Change Plan</a>
-    </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">Cancel Subscription</a>
-    </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">Resume Subscription</a>
-    </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">Update Card</a>
-    </li>
-</ul>
+@subscribed
+    <ul class="nav nav-pills nav-fill flex-column">
+        @subscriptionNotCancelled
+            <li class="nav-item">
+                <a href="#" class="nav-link">Change Plan</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Cancel Subscription</a>
+            </li>
+        @endsubscriptionNotCancelled
+
+        @subscriptionCancelled
+            <li class="nav-item">
+                <a href="#" class="nav-link">Resume Subscription</a>
+            </li>
+        @endsubscriptionCancelled
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">Update Card</a>
+        </li>
+    </ul>
+@endsubscribed
