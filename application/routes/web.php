@@ -8,16 +8,32 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 /* Account */
-Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.'], function() {
-    Route::get('/', 'Account\AccountController@index')->name('index');
+Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.', 'namespace' => 'Account'], function() {
+    Route::get('/', 'AccountController@index')->name('index');
 
     /* Profile */
-    Route::get('/profile', 'Account\ProfileController@index')->name('profile.index');
-    Route::patch('/profile', 'Account\ProfileController@update')->name('profile.update');
+    Route::get('/profile', 'ProfileController@index')->name('profile.index');
+    Route::patch('/profile', 'ProfileController@update')->name('profile.update');
 
     /* Password */
-    Route::get('/password', 'Account\PasswordController@index')->name('password.index');
-    Route::patch('/password', 'Account\PasswordController@update')->name('password.update');
+    Route::get('/password', 'PasswordController@index')->name('password.index');
+    Route::patch('/password', 'PasswordController@update')->name('password.update');
+
+    /* Subscription */
+    Route::group(['prefix' => 'subscription', 'namespace' => 'Subscription'], function() {
+
+        /* Cancel */
+        Route::get('/cancel', 'SubscriptionCancelController@index')->name('subscription.cancel.index');
+
+        /* Resume */
+        Route::get('/resume', 'SubscriptionResumeController@index')->name('subscription.resume.index');
+
+        /* Swap plan */
+        Route::get('/swap', 'SubscriptionSwapController@index')->name('subscription.swap.index');
+
+        /* Card */
+        Route::get('/card', 'SubscriptionCardController@index')->name('subscription.card.index');
+    });
 });
 
 /* Activation account */
