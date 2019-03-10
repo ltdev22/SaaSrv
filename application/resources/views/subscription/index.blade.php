@@ -13,19 +13,19 @@
                     @csrf
 
                     <div class="form-group row">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">Plan</label>
+                        <label for="plan" class="col-sm-2 col-form-label">Plan</label>
                         <div class="col-sm-10">
-                            <select name="plan" id="plan" class="form-control">
+                            <select name="plan" id="plan" class="form-control{{ $errors->has('plan') ? ' is-invalid' : '' }}">
                                 @foreach($plans as $plan)
                                     <option value="{{ $plan->gateway_id }}"{{ (request('plan') === $plan->slug || old('plan') === $plan->gateway_id) ? ' selected="selected"' : '' }}>
-                                        {{ $plan->title }} (${{ $plan->price }})
+                                        {{ $plan->title }} (&euro;{{ $plan->price }})
                                     </option>
                                 @endforeach
                             </select>
                             @if($errors->has('plan'))
                                 <div class="invalid-feedback">{{ $errors->first('plan') }}</div>
                             @endif
-                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group row">
@@ -76,6 +76,7 @@
     });
 
     $('#pay-btn').click(function (e) {
+        e.preventDefault();
         handler.open({
             name: 'SaaSrv',
             description: 'Membership',

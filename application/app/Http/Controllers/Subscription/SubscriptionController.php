@@ -5,6 +5,7 @@ namespace SaaSrv\Http\Controllers\Subscription;
 use SaaSrv\Models\Plan;
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
+use SaaSrv\Http\Requests\Subscription\SubscriptionStoreRequest;
 
 class SubscriptionController extends Controller
 {
@@ -20,9 +21,12 @@ class SubscriptionController extends Controller
         return view('subscription.index', compact('plans'));
     }
 
-    public function store(Request $request)
+    public function store(SubscriptionStoreRequest $request)
     {
-        dump($request->token);
-        dd('If you see the token here, it works! Cool!');
+        $request->user()
+                ->newSubscription('main', $request->plan)
+                ->create($request->token);
+
+        return redirect('/')->withSuccess('Thank you for subscribing!');
     }
 }
