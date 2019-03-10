@@ -16,21 +16,29 @@
     <ul class="nav nav-pills nav-fill flex-column">
         @subscriptionNotCancelled
             <li class="nav-item">
-                <a href="{{ route('account.subscription.swap.index') }}" class="nav-link">Change Plan</a>
+                <a href="{{ route('account.subscription.swap.index') }}" class="nav-link{{ isActive('account/subscription/swap') }}">
+                    Change Plan
+                </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('account.subscription.cancel.index') }}" class="nav-link">Cancel Subscription</a>
+                <a href="{{ route('account.subscription.cancel.index') }}" class="nav-link{{ isActive('account/subscription/cancel') }}">
+                    Cancel Subscription
+                </a>
             </li>
         @endsubscriptionNotCancelled
 
         @subscriptionCancelled
             <li class="nav-item">
-                <a href="{{ route('account.subscription.resume.index') }}" class="nav-link">Resume Subscription</a>
+                <a href="{{ route('account.subscription.resume.index') }}" class="nav-link{{ isActive('account/subscription/resume') }}">
+                    Resume Subscription
+                </a>
             </li>
         @endsubscriptionCancelled
 
         <li class="nav-item">
-            <a href="{{ route('account.subscription.card.index') }}" class="nav-link">Update Card</a>
+            <a href="{{ route('account.subscription.card.index') }}" class="nav-link{{ isActive('account/subscription/card') }}">
+                Update Card
+            </a>
         </li>
     </ul>
 @endsubscribed

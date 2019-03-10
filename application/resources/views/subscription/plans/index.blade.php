@@ -14,11 +14,13 @@
                 <h2 class="card-title pricing-card-title">
                     &euro;{{ $plan->price }} <!-- <small class="text-muted">/ mo</small> -->
                 </h2>
-                <ul class="list-unstyled mt-3 mb-4">
-                    @foreach($plan->information as $info)
-                        <li>{{ $info }}</li>
-                    @endforeach
-                </ul>
+                <div class="plans-description h-50">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        @foreach($plan->information as $info)
+                            <li>{{ $info }}</li>
+                        @endforeach
+                    </ul>
+                </div>
                 <a href="{{ route('subscription.index', ['plan' => $plan->slug]) }}" class="btn btn-lg btn-block btn-outline-primary">
                     Sign up for this
                 </a>
