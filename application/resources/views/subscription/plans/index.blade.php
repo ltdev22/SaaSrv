@@ -19,7 +19,7 @@
                         <li>{{ $info }}</li>
                     @endforeach
                 </ul>
-                <a href="{{ route('subscription.index') }}" class="btn btn-lg btn-block btn-outline-primary">
+                <a href="{{ route('subscription.index', ['plan' => $plan->slug]) }}" class="btn btn-lg btn-block btn-outline-primary">
                     Sign up for this
                 </a>
             </div><!-- /.card-body -->
