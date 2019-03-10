@@ -2,6 +2,7 @@
 
 namespace SaaSrv\Http\Requests\Subscription;
 
+use SaaSrv\Rules\ValidStripeCoupon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SubscriptionStoreRequest extends FormRequest
@@ -33,6 +34,10 @@ class SubscriptionStoreRequest extends FormRequest
             'token' => [
                 'required',
             ],
+            'coupon' => [
+                'nullable',
+                new ValidStripeCoupon(),
+            ]
         ];
     }
 }

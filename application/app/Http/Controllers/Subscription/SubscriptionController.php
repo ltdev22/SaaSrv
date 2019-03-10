@@ -21,11 +21,22 @@ class SubscriptionController extends Controller
         return view('subscription.index', compact('plans'));
     }
 
+    /**
+     * Save the user's subscription.
+     *
+     * @param   \Saasy\Requests\Subscription\SubscriptionStoreRequest   $request
+     * @return  \Illuminate\Http\Response
+     */
     public function store(SubscriptionStoreRequest $request)
     {
-        $request->user()
-                ->newSubscription('main', $request->plan)
-                ->create($request->token);
+        $subscription = $request->user()->newSubscription('main', $request->plan);
+
+        // Do we have a coupon?
+        if ($request->has('coupon')) {
+            $subscription->withCoupon($request->coupon);
+        }
+
+        $subscription->create($request->token);
 
         return redirect('/')->withSuccess('Thank you for subscribing!');
     }
