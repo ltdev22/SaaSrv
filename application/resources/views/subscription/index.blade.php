@@ -9,7 +9,7 @@
             </div><!-- /.panel-heading -->
 
             <div class="card-body">
-                <form action="" method="post" class="form-horizontal" id="payment-form">
+                <form action="{{ route('subscription.store') }}" method="post" class="form-horizontal" id="payment-form">
                     @csrf
 
                     <div class="form-group row">
@@ -40,8 +40,8 @@
 
                     <div class="form-group row">
                         <div class="col-sm-10 offset-sm-2">
-                            <button type="submit" class="btn btn-primary">
-                                Subscribe
+                            <button type="submit" class="btn btn-primary" id="pay-btn">
+                                Pay
                             </button>
                         </div>
                     </div>
@@ -51,4 +51,38 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+    let handler = StripeCheckout.configure({
+        key: '{{ config('services.stripe.key') }}',
+        locale: 'auto',
+        token: function (token) {
+            // check from console.log for a token.id ( tok_######## )
+            // and add it to the hidden input we generate below
+            //console.log(token);
+            let paymentForm = $('#payment-form');
+            $('#pay-btn').prop('disabled', true);
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'token',
+                value: token.id
+            }).appendTo(paymentForm);
+
+            paymentForm.submit();
+        }
+    });
+
+    $('#pay-btn').click(function (e) {
+        handler.open({
+            name: 'SaaSrv',
+            description: 'Membership',
+            currency: 'eur',
+            key: '{{ config('services.stripe.key') }}',
+            email: '{{ auth()->user()->email }}'
+        });
+    });
+</script>
 @endsection

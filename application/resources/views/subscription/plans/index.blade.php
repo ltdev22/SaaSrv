@@ -12,7 +12,7 @@
             </div><!-- /.card-header -->
             <div class="card-body">
                 <h2 class="card-title pricing-card-title">
-                    ${{ $plan->price }} <!-- <small class="text-muted">/ mo</small> -->
+                    &euro;{{ $plan->price }} <!-- <small class="text-muted">/ mo</small> -->
                 </h2>
                 <ul class="list-unstyled mt-3 mb-4">
                     @foreach($plan->information as $info)

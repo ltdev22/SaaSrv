@@ -19,4 +19,10 @@ class SubscriptionController extends Controller
 
         return view('subscription.index', compact('plans'));
     }
+
+    public function store(Request $request)
+    {
+        dump($request->token);
+        dd('If you see the token here, it works! Cool!');
+    }
 }
