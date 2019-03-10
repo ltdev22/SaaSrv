@@ -36,3 +36,8 @@ Route::group(['prefix' => 'plans', 'as' => 'plans.'], function() {
     Route::get('/members', 'Subscription\PlansController@members')->name('members');
     Route::get('/teams', 'Subscription\PlansController@teams')->name('teams');
 });
+
+/* Subscription */
+Route::group(['prefix' => 'subscription', 'as' => 'subscription.', 'middleware' => ['auth.register']], function() {
+    Route::get('/', 'Subscription\SubscriptionController@index')->name('index');
+});
