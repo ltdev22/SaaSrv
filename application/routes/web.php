@@ -25,11 +25,13 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
         /* Cancel */
         Route::group(['middleware' => 'subscription.notCancelled'], function() {
             Route::get('/cancel', 'SubscriptionCancelController@index')->name('subscription.cancel.index');
+            Route::post('/cancel', 'SubscriptionCancelController@store')->name('subscription.cancel.store');
         });
 
         /* Resume */
         Route::group(['middleware' => 'subscription.cancelled'], function() {
             Route::get('/resume', 'SubscriptionResumeController@index')->name('subscription.resume.index');
+            Route::post('/resume', 'SubscriptionResumeController@store')->name('subscription.resume.store');
         });
 
         /* Swap plan */

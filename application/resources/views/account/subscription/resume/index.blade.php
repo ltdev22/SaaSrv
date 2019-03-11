@@ -9,8 +9,14 @@
             </div><!-- /.card-header -->
 
             <div class="card-body">
-                <form action="#" method="POST">
+                <form action="{{ route('account.subscription.resume.store') }}" method="POST">
                     @csrf
+
+                    <div class="alert alert-secondary" role="alert">
+                        I've changed my mind. I want to resume my subscription.
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Resume my subscription</button>
                 </form>
             </div><!-- /.card-body -->
         </div><!-- /.card -->
