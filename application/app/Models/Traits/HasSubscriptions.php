@@ -44,4 +44,24 @@ trait HasSubscriptions
     {
         return !$this->hasCancelled();
     }
+
+    /**
+     * Is the user a returning customer?
+     *
+     * @return bool
+     */
+    public function isCustomer(): bool
+    {
+        return $this->hasStripeId();
+    }
+
+    /**
+     * Is the user not a returning customer?
+     *
+     * @return bool
+     */
+    public function isNotCustomer(): bool
+    {
+        return !$this->isCustomer();
+    }
 }

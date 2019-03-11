@@ -62,5 +62,11 @@ class Kernel extends HttpKernel
 
         'confirmationToken.expired' => \SaaSrv\Http\Middleware\ChecksExpiredConfirmationTokens::class,
         'auth.register' => \SaaSrv\Http\Middleware\AuthenticateRegister::class,
+
+        'subscription.active' => \SaaSrv\Http\Middleware\Subscription\RedirectIfNotActive::class,
+        'subscription.notCancelled' => \SaaSrv\Http\Middleware\Subscription\RedirectIfCancelled::class,
+        'subscription.cancelled' => \SaaSrv\Http\Middleware\Subscription\RedirectIfNotCancelled::class,
+        'subscription.customer' => \SaaSrv\Http\Middleware\Subscription\RedirectIfNotCustomer::class,
+        'subscription.inactive' => \SaaSrv\Http\Middleware\Subscription\RedirectIfActive::class,
     ];
 }
