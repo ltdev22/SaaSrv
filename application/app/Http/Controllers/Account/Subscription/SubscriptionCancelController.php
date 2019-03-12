@@ -4,6 +4,7 @@ namespace SaaSrv\Http\Controllers\Account\Subscription;
 
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
+use SaaSrv\Events\Subscription\SubscriptionHasBeenCancelled;
 
 class SubscriptionCancelController extends Controller
 {
@@ -14,7 +15,7 @@ class SubscriptionCancelController extends Controller
      */
     public function index()
     {
-        return view('account.subscription.cancel.index');
+        return view('account.subscription.cancel');
     }
 
     /**
@@ -24,7 +25,13 @@ class SubscriptionCancelController extends Controller
      */
     public function store(Request $request)
     {
+        // Cancel the user's subscription
         $request->user()->subscription('main')->cancel();
+
+        // Notify the user via email
+        event(new SubscriptionHasBeenCancelled (
+            $request->user()
+        ));
 
         return redirect()->route('account.index')->withSuccess('You subscription has been cancelled.');
     }

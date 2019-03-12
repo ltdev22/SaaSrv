@@ -4,6 +4,7 @@ namespace SaaSrv\Http\Controllers\Account\Subscription;
 
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
+use SaaSrv\Events\Subscription\SubscriptionHasResumed;
 
 class SubscriptionResumeController extends Controller
 {
@@ -14,7 +15,7 @@ class SubscriptionResumeController extends Controller
      */
     public function index()
     {
-        return view('account.subscription.resume.index');
+        return view('account.subscription.resume');
     }
 
     /**
@@ -24,7 +25,13 @@ class SubscriptionResumeController extends Controller
      */
     public function store(Request $request)
     {
+        // Resume the user's subscription
         $request->user()->subscription('main')->resume();
+
+        // Notify the user via email
+        event(new SubscriptionHasResumed(
+            $request->user()
+        ));
 
         return redirect()->route('account.index')->withSuccess('You subscription has been resumed.');
     }
