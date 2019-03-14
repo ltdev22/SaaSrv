@@ -15,6 +15,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'SaaSrv\Events\Auth\UserHasSignedUp' => [
             'SaaSrv\Listeners\Auth\SendActivationEmail',
+            'SaaSrv\Listeners\Auth\CreateDefaultTeamForUser',
         ],
         'SaaSrv\Events\Auth\UserRequestedActivationEmailAgain' => [
             'SaaSrv\Listeners\Auth\SendActivationEmail',

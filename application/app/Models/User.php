@@ -46,6 +46,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * A user should have one team.
+     *
+     * @return $this
+     */
+    public function team()
+    {
+        return $this->hasOne(\SaaSrv\Models\Team::class);
+    }
+
+    /**
      * Has the user been activated?
      *
      * @return bool
