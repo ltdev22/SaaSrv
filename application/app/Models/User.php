@@ -56,6 +56,56 @@ class User extends Authenticatable
     }
 
     /**
+     * Assocciate user with plans.
+     *
+     * hasMany      Plans
+     * Through      Subscriptions
+     *
+     * ForeignKeys
+     * user_id      relates to `subscriptions`.`user_id`
+     * gateway_id   relates to `plans`.`gateway_id`
+     * id           relates to `users`.`id` and also matches `subscriptions`.`user_id`
+     * stripe_plan  relates to `subscriptions`.`stripe_plan`
+     *
+     * @return $this
+     */
+    public function plans()
+    {
+        return $this->hasManyThrough(
+            \SaaSrv\Models\Plan::class,
+            \Laravel\Cashier\Subscription::class,
+            'user_id',
+            'gateway_id',
+            'id',
+            'stripe_plan'
+        )->orderBy('subscriptions.created_at', 'desc');
+    }
+
+    /**
+     * Typically we would have one subscription to a specific plan,
+     * so we want to get user's last subscription plan which is the first on the list
+     * since we are sorting them by desc order
+     *
+     * @see \Saasy\Models\User::plans()
+     * @return $this
+     */
+    public function plan()
+    {
+        return $this->plans()->first();
+    }
+
+    /**
+     * Return $this->plan() accessing as a property
+     *
+     * @see \Saasy\Models\User::plan()
+     * @return $this
+     */
+    public function getPlanAttribute()
+    {
+        return $this->plan();
+    }
+
+    /**
      * Has the user been activated?
      *
      * @return bool
