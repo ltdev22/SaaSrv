@@ -40,5 +40,13 @@
                 Update Card
             </a>
         </li>
+
+        @teamSubscription
+            <li class="nav-item">
+                <a href="{{ route('account.subscription.team.index') }}" class="nav-link{{ isActive('account/subscription/team') }}">
+                    Manage team
+                </a>
+            </li>
+        @endteamSubscription
     </ul>
 @endsubscribed

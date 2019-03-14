@@ -64,4 +64,14 @@ trait HasSubscriptions
     {
         return !$this->isCustomer();
     }
+
+    /**
+     * Does the user have a team subscription?
+     *
+     * @return bool
+     */
+    public function hasTeamSubscription(): bool
+    {
+        return $this->plan->isForTeams();
+    }
 }

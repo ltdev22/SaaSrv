@@ -52,4 +52,14 @@ class Plan extends Model
     {
         return $query->where('teams_enabled', true);
     }
+
+    /**
+     * Is this a team plan?
+     *
+     * @return bool
+     */
+    public function isForTeams(): bool
+    {
+        return $this->teams_enabled;
+    }
 }

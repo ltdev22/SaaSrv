@@ -44,6 +44,12 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
             Route::get('/card', 'SubscriptionCardController@index')->name('subscription.card.index');
             Route::post('/card', 'SubscriptionCardController@store')->name('subscription.card.store');
         });
+
+        /* Team */
+        Route::group([/*'middleware' => 'subscription.customer'*/], function() {
+            Route::get('/team', 'SubscriptionTeamController@index')->name('subscription.team.index');
+            Route::post('/team', 'SubscriptionTeamController@store')->name('subscription.team.store');
+        });
     });
 });
 
