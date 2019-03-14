@@ -24,4 +24,19 @@ class Team extends Model
     {
         return $this->belongsTo(\SaaSrv\Models\User::class, 'user_id');
     }
+
+    /**
+     * A team has many members.
+     *
+     * @return $this
+     */
+    public function members()
+    {
+        return $this->belongsToMany(
+            \SaaSrv\Models\User::class,
+            'team_user',
+            'team_id',
+            'user_id'
+        )->withTimestamps();
+    }
 }

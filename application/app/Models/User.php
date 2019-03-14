@@ -56,6 +56,16 @@ class User extends Authenticatable
     }
 
     /**
+     * A user can belong to many teams.
+     *
+     * @return $this
+     */
+    public function teams()
+    {
+        return $this->belongsToMany(\SaaSrv\Models\Team::class)->withTimestamps();
+    }
+
+    /**
      * Assocciate user with plans.
      *
      * hasMany      Plans

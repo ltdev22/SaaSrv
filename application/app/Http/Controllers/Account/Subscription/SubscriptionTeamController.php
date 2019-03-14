@@ -17,7 +17,7 @@ class SubscriptionTeamController extends Controller
     {
         $team = $request->user()->team;
 
-        return view('account.subscription.team', compact('team'));
+        return view('account.subscription.team.index', compact('team'));
     }
 
     /**
