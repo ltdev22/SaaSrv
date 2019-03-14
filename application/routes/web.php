@@ -46,9 +46,9 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
         });
 
         /* Team */
-        Route::group([/*'middleware' => 'subscription.customer'*/], function() {
+        Route::group(['middleware' => 'subscription.has.team'], function() {
             Route::get('/team', 'SubscriptionTeamController@index')->name('subscription.team.index');
-            Route::post('/team', 'SubscriptionTeamController@store')->name('subscription.team.store');
+            Route::patch('/team', 'SubscriptionTeamController@update')->name('subscription.team.update');
         });
     });
 });
