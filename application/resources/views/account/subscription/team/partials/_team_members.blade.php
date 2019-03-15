@@ -7,7 +7,7 @@
 
             <div class="card-body">
 
-                <form action="" class="form-inline float-right" method="POST">
+                <form action="{{ route('account.subscription.team.member.store') }}" class="form-inline float-right" method="POST">
                     @csrf
 
                     <div class="form-group mb-2 mx-sm-2">
