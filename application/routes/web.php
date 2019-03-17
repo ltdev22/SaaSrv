@@ -37,6 +37,7 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
         /* Swap plan */
         Route::group(['middleware' => 'subscription.notCancelled'], function() {
             Route::get('/swap', 'SubscriptionSwapController@index')->name('subscription.swap.index');
+            Route::patch('/swap', 'SubscriptionSwapController@update')->name('subscription.swap.update');
         });
 
         /* Card */

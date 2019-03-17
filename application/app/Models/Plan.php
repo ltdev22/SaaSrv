@@ -26,11 +26,37 @@ class Plan extends Model
     /**
      * Filter only active plans
      *
+     * @param  \Illuminate\Database\Eloquent\Builder    $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', true);
+    }
+
+    /**
+     * Filter exclude current user's plan
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder    $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeExceptCurrent(Builder $query): Builder
+    {
+        return $query->except(
+            auth()->user()->plan->id
+        );
+    }
+
+    /**
+     * Filter exclude specific plan
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder    $query
+     * @param  int                                      $plan_id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeExcept(Builder $query, int $plan_id): Builder
+    {
+        return $query->where('id', '!=' , $plan_id);
     }
 
     /**
