@@ -55,16 +55,13 @@ class SubscriptionSwapController extends Controller
     {
         // Check current user's plan and plan downgrade to
         if ($user->plan->isForTeams() && $plan->isNotForTeams()) {
-            $members = $user->team->members();
-            $members->detach();
-
-            // @todo needs checking
             // Notify members via email
-            $members->each(function ($member) {
+            $user->team->members->each(function ($member) {
                 \Mail::to($member)->send(
                     new RemoveTeamMemberEmail($member)
                 );
             });
+            $user->team->members()->detach();
         }
     }
 }

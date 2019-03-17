@@ -20,39 +20,39 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     Route::patch('/password', 'PasswordController@update')->name('password.update');
 
     /* Subscriptions */
-    Route::group(['prefix' => 'subscription', 'namespace' => 'Subscription', 'middleware' => 'subscription.owner'], function() {
+    Route::group(['prefix' => 'subscription', 'namespace' => 'Subscription', 'as' => 'subscription.', 'middleware' => 'subscription.owner'], function() {
 
         /* Cancel */
         Route::group(['middleware' => 'subscription.notCancelled'], function() {
-            Route::get('/cancel', 'SubscriptionCancelController@index')->name('subscription.cancel.index');
-            Route::post('/cancel', 'SubscriptionCancelController@store')->name('subscription.cancel.store');
+            Route::get('/cancel', 'SubscriptionCancelController@index')->name('cancel.index');
+            Route::post('/cancel', 'SubscriptionCancelController@store')->name('cancel.store');
         });
 
         /* Resume */
         Route::group(['middleware' => 'subscription.cancelled'], function() {
-            Route::get('/resume', 'SubscriptionResumeController@index')->name('subscription.resume.index');
-            Route::post('/resume', 'SubscriptionResumeController@store')->name('subscription.resume.store');
+            Route::get('/resume', 'SubscriptionResumeController@index')->name('resume.index');
+            Route::post('/resume', 'SubscriptionResumeController@store')->name('resume.store');
         });
 
         /* Swap plan */
         Route::group(['middleware' => 'subscription.notCancelled'], function() {
-            Route::get('/swap', 'SubscriptionSwapController@index')->name('subscription.swap.index');
-            Route::patch('/swap', 'SubscriptionSwapController@update')->name('subscription.swap.update');
+            Route::get('/swap', 'SubscriptionSwapController@index')->name('swap.index');
+            Route::patch('/swap', 'SubscriptionSwapController@update')->name('swap.update');
         });
 
         /* Card */
         Route::group(['middleware' => 'subscription.customer'], function() {
-            Route::get('/card', 'SubscriptionCardController@index')->name('subscription.card.index');
-            Route::post('/card', 'SubscriptionCardController@store')->name('subscription.card.store');
+            Route::get('/card', 'SubscriptionCardController@index')->name('card.index');
+            Route::post('/card', 'SubscriptionCardController@store')->name('card.store');
         });
 
         /* Team */
         Route::group(['middleware' => 'subscription.has.team'], function() {
-            Route::get('/team', 'SubscriptionTeamController@index')->name('subscription.team.index');
-            Route::patch('/team', 'SubscriptionTeamController@update')->name('subscription.team.update');
+            Route::get('/team', 'SubscriptionTeamController@index')->name('team.index');
+            Route::patch('/team', 'SubscriptionTeamController@update')->name('team.update');
 
-            Route::post('/team/member', 'SubscriptionTeamMemberController@store')->name('subscription.team.member.store');
-            Route::delete('/team/member/{user}', 'SubscriptionTeamMemberController@destroy')->name('subscription.team.member.destroy');
+            Route::post('/team/member', 'SubscriptionTeamMemberController@store')->name('team.member.store');
+            Route::delete('/team/member/{user}', 'SubscriptionTeamMemberController@destroy')->name('team.member.destroy');
         });
     });
 });
