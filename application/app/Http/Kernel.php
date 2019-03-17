@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'subscription.customer' => \SaaSrv\Http\Middleware\Subscription\RedirectIfNotCustomer::class,
         'subscription.inactive' => \SaaSrv\Http\Middleware\Subscription\RedirectIfActive::class,
         'subscription.has.team' => \SaaSrv\Http\Middleware\Subscription\RedirectIfNotTeamPlan::class,
+        'subscription.owner' => \SaaSrv\Http\Middleware\Subscription\RedirectIfOwnerHasSubscription::class,
     ];
 }

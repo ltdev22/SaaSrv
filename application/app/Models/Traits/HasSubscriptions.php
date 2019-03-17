@@ -11,6 +11,10 @@ trait HasSubscriptions
      */
     public function isSubscribed(): bool
     {
+        if ($this->ownerHasSubscription()) {
+            return true;
+        }
+
         return $this->subscribed('main');
     }
 
@@ -31,8 +35,11 @@ trait HasSubscriptions
      */
     public function hasCancelled(): bool
     {
-        // We use optional because the user may not have subscription at all
-        return optional($this->subscription('main'))->cancelled();
+        if (!$this->subscription('main')) {
+            return false;
+        }
+
+        return $this->subscription('main')->cancelled();
     }
 
     /**
@@ -72,6 +79,10 @@ trait HasSubscriptions
      */
     public function hasTeamSubscription(): bool
     {
+        if (!$this->plan) {
+            return false;
+        }
+        
         return $this->plan->isForTeams();
     }
 
@@ -83,5 +94,22 @@ trait HasSubscriptions
     public function doesNotHaveTeamSubscription(): bool
     {
         return !$this->hasTeamSubscription();
+    }
+
+    /**
+     * Check for any team the member is subscribed, if owner has a subscription already.
+     * Basically we want to prevent members from accessing areas that the team owner has access.
+     *
+     * @return bool
+     */
+    public function ownerHasSubscription(): bool
+    {
+        foreach ($this->teams as $team) {
+            if ($team->owner->isSubscribed()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

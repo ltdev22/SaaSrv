@@ -19,8 +19,8 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     Route::get('/password', 'PasswordController@index')->name('password.index');
     Route::patch('/password', 'PasswordController@update')->name('password.update');
 
-    /* Subscription */
-    Route::group(['prefix' => 'subscription', 'namespace' => 'Subscription'], function() {
+    /* Subscriptions */
+    Route::group(['prefix' => 'subscription', 'namespace' => 'Subscription', 'middleware' => 'subscription.owner'], function() {
 
         /* Cancel */
         Route::group(['middleware' => 'subscription.notCancelled'], function() {
