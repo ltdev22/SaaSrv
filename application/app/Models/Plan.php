@@ -88,4 +88,14 @@ class Plan extends Model
     {
         return $this->teams_enabled;
     }
+
+    /**
+     * Is this not a team plan?
+     *
+     * @return bool
+     */
+    public function isNotForTeams(): bool
+    {
+        return !$this->isForTeams();
+    }
 }

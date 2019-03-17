@@ -2,9 +2,11 @@
 
 namespace SaaSrv\Http\Controllers\Account\Subscription;
 
+use SaaSrv\Models\User;
 use SaaSrv\Models\Plan;
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
+use SaaSrv\Http\Requests\Subscription\SubscriptionUpdateRequest;
 
 class SubscriptionSwapController extends Controller
 {
@@ -29,16 +31,33 @@ class SubscriptionSwapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(SubscriptionUpdateRequest $request)
     {
         $user = $request->user();
         $plan = Plan::where('gateway_id', $request->plan)->first();
 
         // Swap the plan
-        // $user->subscription('main')->swap($plan->gateway_id);
+        $this->downgradeFromTeamPlan($user, $plan);
+        $user->subscription('main')->swap($plan->gateway_id);
 
         // @todo: send email
+        // $user->team->members()->each(function () {});
 
         return back()->withSuccess('Your plan has been successfully updated.');
+    }
+
+    /**
+     * Remove all members when downgrading from a team plan to a user one.
+     *
+     * @param \SaaSrv\Models\User   $user
+     * @param \SaaSrv\Models\Plan   $plan
+     * @return void
+     */
+    public function downgradeFromTeamPlan(User $user, Plan $plan)
+    {
+        // Check current user's plan and plan downgrade to
+        if ($user->plan->isForTeams() && $plan->isNotForTeams()) {
+            $user->team->members()->detach();
+        }
     }
 }

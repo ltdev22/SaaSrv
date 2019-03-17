@@ -19,9 +19,11 @@
 
                     <div class="form-group">
                         <label for="plan">Plan</label>
-                        <select name="plan" class="form-control" id="plan">
+                        <select name="plan" class="form-control{{ $errors->has('plan') ? ' is-invalid' : '' }}" id="plan">
                             @foreach($plans as $plan)
-                                <option value="{{ $plan->gateway_id }}">{{ $plan->title }} (${{ $plan->price }})</option>
+                                <option value="{{ $plan->gateway_id }}"{{ old('plan') === $plan->gateway_id ? ' selected="selected"' : '' }}>
+                                    {{ $plan->title }} (${{ $plan->price }})
+                                </option>
                             @endforeach
                         </select>
                         @if($errors->has('plan'))
