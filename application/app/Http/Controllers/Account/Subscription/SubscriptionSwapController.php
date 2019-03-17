@@ -6,6 +6,7 @@ use SaaSrv\Models\User;
 use SaaSrv\Models\Plan;
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
+use SaaSrv\Mail\Subscription\RemoveTeamMemberEmail;
 use SaaSrv\Http\Requests\Subscription\SubscriptionUpdateRequest;
 
 class SubscriptionSwapController extends Controller
@@ -40,9 +41,6 @@ class SubscriptionSwapController extends Controller
         $this->downgradeFromTeamPlan($user, $plan);
         $user->subscription('main')->swap($plan->gateway_id);
 
-        // @todo: send email
-        // $user->team->members()->each(function () {});
-
         return back()->withSuccess('Your plan has been successfully updated.');
     }
 
@@ -57,7 +55,16 @@ class SubscriptionSwapController extends Controller
     {
         // Check current user's plan and plan downgrade to
         if ($user->plan->isForTeams() && $plan->isNotForTeams()) {
-            $user->team->members()->detach();
+            $members = $user->team->members();
+            $members->detach();
+
+            // @todo needs checking
+            // Notify members via email
+            $members->each(function ($member) {
+                \Mail::to($member)->send(
+                    new RemoveTeamMemberEmail($member)
+                );
+            });
         }
     }
 }
