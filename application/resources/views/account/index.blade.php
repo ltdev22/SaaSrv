@@ -9,7 +9,7 @@
             </div><!-- /.panel-heading -->
 
             <div class="card-body">
-                Content goes here
+                {{ auth()->user()->plan() }}
             </div><!-- /.panel-body -->
         </div><!-- /.panel -->
     </div>
