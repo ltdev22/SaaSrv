@@ -33,24 +33,37 @@
                     </thead>
                     <tbody>
                         @if($team->members->count())
-                            @foreach($team->members as $user)
+                            @foreach($team->members as $member)
                                 <tr>
-                                    <td>{{ $user->id }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->pivot->created_at->toDateString() }}</td>
+                                    <td>{{ $member->id }}</td>
+                                    <td>{{ $member->name }}</td>
+                                    <td>{{ $member->email }}</td>
+                                    <td>{{ $member->pivot->created_at->toDateString() }}</td>
                                     <td>
-                                        <a href="#">Delete</a>
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('remove-member-{{ $member->id }}').submit()">
+                                            Delete
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="4" align="center">There are no team members at the moment</td>
+                                <td colspan="4" align="center">
+                                    There are no team members at the moment
+                                </td>
                             </tr>
                         @endif
                     </tbody>
                 </table>
+
+                @if($team->members->count())
+                    @foreach($team->members as $member)
+                        <form action="{{ route('account.subscription.team.member.destroy', $member) }}" id="remove-member-{{ $member->id }}" class="hidden" method="POST">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    @endforeach
+                @endif
 
             </div><!-- /.card-body -->
         </div><!-- /.card -->

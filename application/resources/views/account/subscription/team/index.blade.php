@@ -2,7 +2,7 @@
 
 @section('account.content')
 
-    @include('account.subscription.team.partials._edit_form')
+    @include('account.subscription.team.partials._edit_team')
 
     <br>
 

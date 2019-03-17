@@ -51,6 +51,7 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
             Route::patch('/team', 'SubscriptionTeamController@update')->name('subscription.team.update');
 
             Route::post('/team/member', 'SubscriptionTeamMemberController@store')->name('subscription.team.member.store');
+            Route::delete('/team/member/{user}', 'SubscriptionTeamMemberController@destroy')->name('subscription.team.member.destroy');
         });
     });
 });

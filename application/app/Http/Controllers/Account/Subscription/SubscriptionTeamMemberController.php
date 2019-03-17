@@ -23,22 +23,26 @@ class SubscriptionTeamMemberController extends Controller
         }
 
         // Add user as a team member
+        $user = User::where('email', $request->email)->first();
         $request->user()->team->members()->syncWithoutDetaching([
-            User::where('email', $request->email)->first()->id
+            $user->id
         ]);
 
-        return back()->withSuccess('The user has been successfully added in the ' . $request->user()->team->name . ' team.');
+        return back()->withSuccess($user->name . ' has been successfully added to the team.');
     }
 
     /**
-     * Delete a member from team.
+     * Remove a member from team. To clarify
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \SaaSrv\Models\User       $user
+     * @param \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $equest)
+    public function destroy(User $user, Request $request)
     {
-        // code...
+        $request->user()->team->members()->detach($user->id);
+
+        return back()->withSuccess($user->name . ' has been successfully removed from the team.');
     }
 
     /**
