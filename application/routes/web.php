@@ -19,6 +19,10 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     Route::get('/password', 'PasswordController@index')->name('password.index');
     Route::patch('/password', 'PasswordController@update')->name('password.update');
 
+    /* Deactivate */
+    Route::get('/deactivate', 'DeactivateController@index')->name('deactivate.index');
+    Route::patch('/deactivate', 'DeactivateController@update')->name('deactivate.update');
+
     /* Subscriptions */
     Route::group(['prefix' => 'subscription', 'namespace' => 'Subscription', 'as' => 'subscription.', 'middleware' => 'subscription.owner'], function() {
 

@@ -2,6 +2,7 @@
 
 namespace SaaSrv\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use SaaSrv\Models\Traits\HasSubscriptions;
@@ -13,7 +14,8 @@ class User extends Authenticatable
     use Notifiable,
         HasConfirmationTokens,
         HasSubscriptions,
-        Billable;
+        Billable,
+        SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -122,7 +124,7 @@ class User extends Authenticatable
      */
     public function hasBeenActivated(): bool
     {
-        return !is_null($this->activated_at);
+        return !is_null($this->activated_at) && is_null($this->deleted_at);
     }
 
     /**
