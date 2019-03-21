@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         // Resolve 'confirmationToken' to ConfirmationToken model
-        \Route::model('confirmationToken', \SaaSrv\Models\ConfirmationToken::class);
+        \Route::model('confirmation_token', \SaaSrv\Models\ConfirmationToken::class);
 
         parent::boot();
     }

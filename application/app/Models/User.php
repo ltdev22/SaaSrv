@@ -35,7 +35,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -124,7 +125,7 @@ class User extends Authenticatable
      */
     public function hasBeenActivated(): bool
     {
-        return !is_null($this->activated_at) && is_null($this->deleted_at);
+        return !is_null($this->activated_at);
     }
 
     /**
@@ -135,6 +136,26 @@ class User extends Authenticatable
     public function hasNotBeenActivated(): bool
     {
         return !$this->hasBeenActivated();
+    }
+
+    /**
+     * Has the user been deactivated (soft deleted)?
+     *
+     * @return bool
+     */
+    public function isDeactivated(): bool
+    {
+        return !is_null($this->deleted_at);
+    }
+
+    /**
+     * Has the user not been deactivated (not soft deleted)?
+     *
+     * @return bool
+     */
+    public function isNotDeactivated(): bool
+    {
+        return !$this->isDeactivated();
     }
 
     /**

@@ -16,7 +16,7 @@ class ChecksExpiredConfirmationTokens
      */
     public function handle($request, Closure $next, string $redirectTo)
     {
-        if ($request->confirmationToken->hasExpired()) {
+        if ($request->confirmation_token->hasExpired()) {
             return redirect($redirectTo)->withError('The token has expired.');
         }
         return $next($request);

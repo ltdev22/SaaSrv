@@ -68,7 +68,7 @@ Route::group(['prefix' => 'activation', 'as' => 'activation.', 'middleware' => [
 
     // Whenever we receive a confirmationToken in the url we need to resolve this to a ConfirmationToken model
     // @see RouteServiceProvider
-    Route::get('/{confirmationToken}', 'Auth\ActivationController@activate')->name('activate');
+    Route::get('/{confirmation_token}', 'Auth\ActivationController@activate')->name('activate');
 });
 
 /* Plans */
