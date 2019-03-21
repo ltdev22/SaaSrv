@@ -9,6 +9,9 @@
         <a href="{{ route('account.password.index') }}" class="nav-link{{ isActive('account/password') }}">Change Password</a>
     </li>
     <li class="nav-item">
+        <a href="{{ route('account.twofactor.index') }}" class="nav-link{{ isActive('account/twofactor') }}">Two Factor Authentication</a>
+    </li>
+    <li class="nav-item">
         <a href="{{ route('account.deactivate.index') }}" class="nav-link{{ isActive('account/deactivate') }}">Deactivate Account</a>
     </li>
 </ul>
