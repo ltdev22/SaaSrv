@@ -20,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
         'SaaSrv\Events\Auth\UserRequestedActivationEmailAgain' => [
             'SaaSrv\Listeners\Auth\SendActivationEmail',
         ],
+        'SaaSrv\Events\Auth\AccountHasBeenDeactivated' => [
+            'SaaSrv\Listeners\Auth\SendAccountDeactivatedEmail',
+        ],
         'SaaSrv\Events\Subscription\SubscriptionHasBeenCancelled' => [
             'SaaSrv\Listeners\Subscription\SendCancellationEmail',
         ],

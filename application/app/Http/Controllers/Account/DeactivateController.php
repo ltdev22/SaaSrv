@@ -4,6 +4,7 @@ namespace SaaSrv\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
+use SaaSrv\Events\Auth\AccountHasBeenDeactivated;
 use SaaSrv\Http\Requests\Account\DeactivateAccountRequest;
 
 class DeactivateController extends Controller
@@ -34,6 +35,8 @@ class DeactivateController extends Controller
         }
 
         $user->delete();
+
+        event(new AccountHasBeenDeactivated($user));
 
         \Auth::logout();
 
