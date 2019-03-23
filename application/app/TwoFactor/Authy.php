@@ -54,7 +54,17 @@ class Authy implements TwoFactorInterface
      */
     public function validateToken(User $user, string $token)
     {
-        dd('Works!');
+        try {
+            $response = $this->client->request(
+                'GET',
+                'https://api.authy.com/protected/json/verify/' . $token . '/' . $user->twoFactor->identifier . '?force=true&api_key=' . config('services.authy.secret')
+            );
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $response = json_decode($response->getBody(), false);
+        return $response->token === 'is valid';
     }
 
     /**

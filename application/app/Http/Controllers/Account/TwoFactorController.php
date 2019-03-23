@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
 use SaaSrv\TwoFactor\TwoFactorInterface;
 use SaaSrv\Http\Requests\TwoFactor\TwoFactorStoreRequest;
+use SaaSrv\Http\Requests\TwoFactor\TwoFactorVerifyRequest;
 
 class TwoFactorController extends Controller
 {
@@ -22,6 +23,13 @@ class TwoFactorController extends Controller
         return view('account.twofactor.index', compact('countries'));
     }
 
+    /**
+     * Setup two factor.
+     *
+     * @param \SaaSrv\Http\Requests\TwoFactor\TwoFactorStoreRequest     $request
+     * @param \SaaSrv\TwoFactor\TwoFactorInterface                      $two_factor    The two factor container (authy in this case) 
+     * @return \Illuminate\Http\Response
+     */
     public function store(TwoFactorStoreRequest $request, TwoFactorInterface $two_factor)
     {
         $user = $request->user();
@@ -42,8 +50,18 @@ class TwoFactorController extends Controller
         return back();
     }
 
-    public function verify(Request $request)
+    /**
+     * Verify two factor setup.
+     *
+     * @param \SaaSrv\Http\Requests\TwoFactor\TwoFactorStoreRequest     $request
+     * @return \Illuminate\Http\Response
+     */
+    public function verify(TwoFactorVerifyRequest $request)
     {
-        dd('Verify!');
+        $request->user()->twoFactor()->update([
+            'verified_at' => \Carbon\Carbon::now(),
+        ]);
+
+        return back();
     }
 }
