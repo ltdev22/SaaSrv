@@ -43,6 +43,11 @@ class TwoFactorVerifyRequest extends FormRequest
      */
     public function rules(): array
     {
+        // @see self::userResolver()
+        if (session()->has('twofactor')) {
+            $this->setUserResolver($this->userResolver());
+        }
+
         return [
             'token' => [
                 'required',
@@ -61,5 +66,24 @@ class TwoFactorVerifyRequest extends FormRequest
         return [
             'token.required' => 'The Verification code field is required.',
         ];
+    }
+
+    /**
+     * This request is used when:
+     *  a) The user is verifying the TFA within the account area. In this case we require a user instance (i.e. $this->user())
+     *  b) When the user is singing in. At this point the user instance is not set, its null as the user is logged out. 
+     *
+     * So when we are in the second scenario we need to temporary resolve the user by fetching a new instance using 
+     * the user id we keep in session we set in LoginController::requireTwoFactorLogin()
+     *
+     * @return closure
+     */
+    protected function userResolver()
+    {
+        return function () {
+            return \SaaSrv\Models\User::find(
+                session('twofactor')->user_id
+            );
+        };
     }
 }
