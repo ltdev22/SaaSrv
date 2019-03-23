@@ -7,6 +7,11 @@ Route::group(['middleware' => ['auth', 'subscription.active']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
 
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/login/twofactor', 'Auth\TwoFactorLoginController@index')->name('login.twofactor.index');
+    Route::post('/login/twofactor', 'Auth\TwoFactorLoginController@verify')->name('login.twofactor.verify');
+});
+
 /* Account */
 Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.', 'namespace' => 'Account'], function() {
     Route::get('/', 'AccountController@index')->name('index');
@@ -22,6 +27,12 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     /* Deactivate */
     Route::get('/deactivate', 'DeactivateController@index')->name('deactivate.index');
     Route::patch('/deactivate', 'DeactivateController@update')->name('deactivate.update');
+
+    /* TwoFactor */
+    Route::get('/twofactor', 'TwoFactorController@index')->name('twofactor.index');
+    Route::post('/twofactor', 'TwoFactorController@store')->name('twofactor.store');
+    Route::post('/twofactor/verify', 'TwoFactorController@verify')->name('twofactor.verify');
+    Route::delete('/twofactor', 'TwoFactorController@destroy')->name('twofactor.destroy');
 
     /* Subscriptions */
     Route::group(['prefix' => 'subscription', 'namespace' => 'Subscription', 'as' => 'subscription.', 'middleware' => 'subscription.owner'], function() {

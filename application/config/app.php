@@ -162,6 +162,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         SaaSrv\Providers\StripeServiceProvider::class,
         SaaSrv\Providers\BladeServiceProvider::class,
+        SaaSrv\Providers\TwoFactorServiceProvider::class,
 
     ],
 

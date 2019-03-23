@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use SaaSrv\Models\Traits\HasSubscriptions;
 use SaaSrv\Models\Traits\HasConfirmationTokens;
+use SaaSrv\Models\Traits\HasTwoFactorAuthentication;
 use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
@@ -15,7 +16,8 @@ class User extends Authenticatable
         HasConfirmationTokens,
         HasSubscriptions,
         Billable,
-        SoftDeletes;
+        SoftDeletes,
+        HasTwoFactorAuthentication;
 
     /**
      * The attributes that are mass assignable.
