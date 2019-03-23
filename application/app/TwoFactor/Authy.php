@@ -30,7 +30,23 @@ class Authy implements TwoFactorInterface
      */
     public function register(User $user)
     {
-        dd('Works!');
+        try {
+            // Set in a response the request we do to authy api
+            $response = $this->client->request(
+                'POST',
+                'https://api.authy.com/protected/json/users/new?api_key=' . config('services.authy.secret'),
+                [
+                    'form_params' => [
+                        'user' => $this->getTwoFactorRegistrationDetails($user),
+                    ],
+                ]
+            );
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        // Return the response body/content as an object rather than array
+        return json_decode($response->getBody(), false);
     }
 
     /**
@@ -47,5 +63,20 @@ class Authy implements TwoFactorInterface
     public function delete(User $user)
     {
         dd('Works!');
+    }
+
+    /**
+     * Return the user's registration details.
+     *
+     * @param   \SaaSrv\Models\User  $user
+     * @return  array
+     */
+    protected function getTwoFactorRegistrationDetails(User $user): array
+    {
+        return [
+            'email'     => $user->email,
+            'cellphone' => $user->twoFactor->phone,
+            'country_code' => $user->twoFactor->dial_code,
+        ];
     }
 }

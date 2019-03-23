@@ -6,6 +6,7 @@ use SaaSrv\Models\Country;
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
 use SaaSrv\TwoFactor\TwoFactorInterface;
+use SaaSrv\Http\Requests\TwoFactor\TwoFactorStoreRequest;
 
 class TwoFactorController extends Controller
 {
@@ -21,8 +22,23 @@ class TwoFactorController extends Controller
         return view('account.twofactor.index', compact('countries'));
     }
 
-    public function store(Request $request, TwoFactorInterface $two_factor)
+    public function store(TwoFactorStoreRequest $request, TwoFactorInterface $two_factor)
     {
-        $two_factor->register($request->user());
+        $user = $request->user();
+
+        // First we need to store the user record in our database
+        $user->TwoFactor()->create([
+            'phone' => $request->phone,
+            'dial_code' => $request->dial_code,
+        ]);
+
+        // Then update the identifier if the response to the TF was successfull
+        if ($response = $two_factor->register($user)) {
+            $user->TwoFactor()->update([
+                'identifier' => $response->user->id,
+            ]);
+        }
+
+        return back();
     }
 }

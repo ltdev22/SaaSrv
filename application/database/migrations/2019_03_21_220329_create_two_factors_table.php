@@ -16,7 +16,7 @@ class CreateTwoFactorsTable extends Migration
         Schema::create('two_factor', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->index();
-            $table->string('identifier');
+            $table->string('identifier')->nullable();
             $table->string('phone');
             $table->string('dial_code');
             $table->timestamp('verified_at')->nullable();
@@ -33,6 +33,6 @@ class CreateTwoFactorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('two_factors');
+        Schema::dropIfExists('two_factor');
     }
 }
