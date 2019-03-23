@@ -9,10 +9,14 @@
             </div><!-- /.panel-heading -->
 
             <div class="card-body">
-                @if( auth()->user()->hasTwoFactorPendingVerification() )
-                    @include('account.twofactor.partials._pending_verification')
+                @if( auth()->user()->twoFactorEnabled() )
+                    @include('account.twofactor.partials._disable_two_factor')
                 @else
-                    @include('account.twofactor.partials._new_registry')
+                    @if( auth()->user()->hasTwoFactorPendingVerification() )
+                        @include('account.twofactor.partials._pending_verification')
+                    @else
+                        @include('account.twofactor.partials._new_registry')
+                    @endif
                 @endif
             </div><!-- /.panel-body -->
         </div><!-- /.panel -->

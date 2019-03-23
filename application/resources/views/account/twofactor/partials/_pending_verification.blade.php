@@ -12,4 +12,13 @@
     <button type="submit" class="btn btn-primary">
         Verify
     </button>
+
+    <a onclick="event.preventDefault(); document.getElementById('cancel-tfa-form').submit();" class="btn btn-danger" href="#">
+        Cancel verification
+    </a>
+</form>
+
+<form action="{{ route('account.twofactor.destroy') }}" id="cancel-tfa-form" class="hidden" method="POST">
+    @csrf
+    @method('DELETE')
 </form>

@@ -27,7 +27,7 @@ class TwoFactorController extends Controller
      * Setup two factor.
      *
      * @param \SaaSrv\Http\Requests\TwoFactor\TwoFactorStoreRequest     $request
-     * @param \SaaSrv\TwoFactor\TwoFactorInterface                      $two_factor    The two factor container (authy in this case) 
+     * @param \SaaSrv\TwoFactor\TwoFactorInterface                      $two_factor    The two factor container (authy in this case)
      * @return \Illuminate\Http\Response
      */
     public function store(TwoFactorStoreRequest $request, TwoFactorInterface $two_factor)
@@ -61,6 +61,25 @@ class TwoFactorController extends Controller
         $request->user()->twoFactor()->update([
             'verified_at' => \Carbon\Carbon::now(),
         ]);
+
+        return back();
+    }
+
+    /**
+     * Remove two factor authentication from user's account.
+     *
+     * @param \Illuminate\Http\Request                  $request
+     * @param \SaaSrv\TwoFactor\TwoFactorInterface      $two_factor
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, TwoFactorInterface $two_factor)
+    {
+        $user = $request->user();
+
+        // Delete the user's tfa from out system only if its removed from Authy first
+        if ($two_factor->delete($user)) {
+            $user->twoFactor()->delete();
+        }
 
         return back();
     }
