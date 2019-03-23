@@ -16,7 +16,9 @@ class TwoFactorServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->singleton(TwoFactorInterface::class, function () {
-            return new Authy();
+            return new Authy (
+                new \GuzzleHttp\Client()
+            );
         });
     }
 

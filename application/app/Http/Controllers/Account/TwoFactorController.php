@@ -5,6 +5,7 @@ namespace SaaSrv\Http\Controllers\Account;
 use SaaSrv\Models\Country;
 use Illuminate\Http\Request;
 use SaaSrv\Http\Controllers\Controller;
+use SaaSrv\TwoFactor\TwoFactorInterface;
 
 class TwoFactorController extends Controller
 {
@@ -20,8 +21,8 @@ class TwoFactorController extends Controller
         return view('account.twofactor.index', compact('countries'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, TwoFactorInterface $two_factor)
     {
-        dd('Submits!');
+        $two_factor->register($request->user());
     }
 }
