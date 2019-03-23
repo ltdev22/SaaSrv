@@ -82,5 +82,6 @@ class LoginController extends Controller
         $this->guard()->logout();
 
         // Redirect the user to login using TFA
+        return redirect()->route('login.twofactor.index');
     }
 }

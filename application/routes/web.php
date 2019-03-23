@@ -7,6 +7,11 @@ Route::group(['middleware' => ['auth', 'subscription.active']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
 
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/login/twofactor', 'Auth\TwoFactorLoginController@index')->name('login.twofactor.index');
+    Route::post('/login/twofactor', 'Auth\TwoFactorLoginController@verify')->name('login.twofactor.verify');
+});
+
 /* Account */
 Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.', 'namespace' => 'Account'], function() {
     Route::get('/', 'AccountController@index')->name('index');
