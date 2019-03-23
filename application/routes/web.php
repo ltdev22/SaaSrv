@@ -26,6 +26,7 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth'], 'as' => 'account.
     /* TwoFactor */
     Route::get('/twofactor', 'TwoFactorController@index')->name('twofactor.index');
     Route::post('/twofactor', 'TwoFactorController@store')->name('twofactor.store');
+    Route::post('/twofactor/verify', 'TwoFactorController@verify')->name('twofactor.verify');
 
     /* Subscriptions */
     Route::group(['prefix' => 'subscription', 'namespace' => 'Subscription', 'as' => 'subscription.', 'middleware' => 'subscription.owner'], function() {

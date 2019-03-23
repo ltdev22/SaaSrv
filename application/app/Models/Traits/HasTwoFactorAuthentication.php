@@ -29,7 +29,7 @@ trait HasTwoFactorAuthentication
     *
     * @return bool
     */
-    public function twoFactorPendingVerification(): bool
+    public function hasTwoFactorPendingVerification(): bool
     {
         // We can't have pending verification if the user hasn't started the process at all
         if (!$this->twoFactor) {

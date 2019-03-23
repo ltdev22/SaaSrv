@@ -41,4 +41,9 @@ class TwoFactorController extends Controller
 
         return back();
     }
+
+    public function verify(Request $request)
+    {
+        dd('Verify!');
+    }
 }
