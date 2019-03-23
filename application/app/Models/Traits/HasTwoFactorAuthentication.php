@@ -19,7 +19,7 @@ trait HasTwoFactorAuthentication
     *
     * @return bool
     */
-    public function twoFactorEnabled(): bool
+    public function hasTwoFactorEnabled(): bool
     {
         return (bool) optional($this->twoFactor)->isVerified();
     }

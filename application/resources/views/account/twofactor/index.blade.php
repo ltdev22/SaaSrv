@@ -9,7 +9,7 @@
             </div><!-- /.panel-heading -->
 
             <div class="card-body">
-                @if( auth()->user()->twoFactorEnabled() )
+                @if( auth()->user()->hashasTwoFactorEnabled() )
                     @include('account.twofactor.partials._disable_two_factor')
                 @else
                     @if( auth()->user()->hasTwoFactorPendingVerification() )

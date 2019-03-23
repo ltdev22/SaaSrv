@@ -4,6 +4,7 @@ namespace SaaSrv\Http\Controllers\Auth;
 
 use SaaSrv\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -49,12 +50,37 @@ class LoginController extends Controller
      * @return mixed
      * @see \Illuminate\Foundation\Auth\AuthenticatesUsers
      */
-    protected function authenticated(\Illuminate\Http\Request $request, $user)
+    protected function authenticated(Request $request, $user)
     {
         if ($user->hasNotBeenActivated()) {
             $this->guard()->logout();
 
             return back()->withError('Your account has not been activated.');
         }
+
+        if ($user->hasTwoFactorEnabled()) {
+            return $this->requireTwoFactorLogin($request, $user);
+        }
+    }
+
+    /**
+     * Will login using Two Factor Authentication.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed                     $user
+     * @return mixed
+     */
+    protected function requireTwoFactorLogin(Request $request, $user)
+    {
+        // Keep in session some login requirements
+        session()->put('twofactor', (object) [
+            'user_id'   => $user->id,
+            'remember'  => $request->has('remember'),
+        ]);
+
+        // We will need to log the user out of course
+        $this->guard()->logout();
+
+        // Redirect the user to login using TFA
     }
 }
