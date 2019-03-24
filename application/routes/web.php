@@ -7,6 +7,12 @@ Route::group(['middleware' => ['auth', 'subscription.active']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
 
+/* Administrators */
+Route::group(['middleware' => ['auth', 'administrator'], 'prefix' => 'administrator', 'as' => 'admin.', 'namespace' => 'Administrator'], function() {
+    Route::get('/impersonate', 'ImpersonateController@index')->name('impersonate.index');
+});
+
+/* Guest, not logged in users */
 Route::group(['middleware' => 'guest'], function() {
     Route::get('/login/twofactor', 'Auth\TwoFactorLoginController@index')->name('login.twofactor.index');
     Route::post('/login/twofactor', 'Auth\TwoFactorLoginController@verify')->name('login.twofactor.verify');
