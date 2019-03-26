@@ -32,7 +32,7 @@ class ImpersonateController extends Controller
         $user = User::where('email', $request->email)->first();
 
         // Then we store in session the user's id
-        session()->put('impersonate', $user->id)
+        session()->put('impersonate', $user->id);
 
         return redirect('/')->withSuccess('You are now impersonating ' . $user->name);
     }
