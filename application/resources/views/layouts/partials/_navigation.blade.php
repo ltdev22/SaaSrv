@@ -34,6 +34,15 @@
                             <a class="nav-link" href="#">Administrator</a>
                         </li>
                     @endadministrator
+                    @impersonating
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" onclick="event.preventDefault();document.getElementById('stop-impersonating-form').submit();">Stop Impersonating</a>
+                            <form action="{{ route('admin.impersonate.stop') }}" id="stop-impersonating-form" method="POST">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </li>
+                    @endimpersonating
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>

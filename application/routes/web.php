@@ -13,6 +13,14 @@ Route::group(['middleware' => ['auth', 'administrator'], 'prefix' => 'administra
     Route::post('/impersonate', 'ImpersonateController@start')->name('impersonate.start');
 });
 
+/**
+ * This route technically belongs to the Administrators route group.
+ *
+ * The reason we keep this route out of the Administrators route group is that when the admin is impersonating he is temporary
+ * logged in as a customer, so the administrator middleware will kick him out of this group and won't be able to stop the impersonation.
+ */
+Route::delete('administrator/impersonate', 'Administrator\ImpersonateController@stop')->name('admin.impersonate.stop');
+
 /* Guest, not logged in users */
 Route::group(['middleware' => 'guest'], function() {
     Route::get('/login/twofactor', 'Auth\TwoFactorLoginController@index')->name('login.twofactor.index');

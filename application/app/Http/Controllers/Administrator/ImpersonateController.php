@@ -36,4 +36,16 @@ class ImpersonateController extends Controller
 
         return redirect('/')->withSuccess('You are now impersonating ' . $user->name);
     }
+
+    /**
+     * Stop impersonating a user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function stop()
+    {
+        session()->forget('impersonate');
+
+        return redirect('/');
+    }
 }
