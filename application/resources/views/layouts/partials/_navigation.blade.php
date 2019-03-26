@@ -31,7 +31,7 @@
                 @else
                     @administrator
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Administrator</a>
+                            <a class="nav-link" href="{{ route('admin.index') }}">Administrator</a>
                         </li>
                     @endadministrator
                     @impersonating

@@ -9,6 +9,7 @@ Route::group(['middleware' => ['auth', 'subscription.active']], function() {
 
 /* Administrators */
 Route::group(['middleware' => ['auth', 'administrator'], 'prefix' => 'administrator', 'as' => 'admin.', 'namespace' => 'Administrator'], function() {
+    Route::get('/', 'AdministratorController@index')->name('index');
     Route::get('/impersonate', 'ImpersonateController@index')->name('impersonate.index');
     Route::post('/impersonate', 'ImpersonateController@start')->name('impersonate.start');
 });
