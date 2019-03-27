@@ -14,6 +14,16 @@ class BladeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // if the user is admin do ...
+        Blade::if ('administrator', function () {
+            return auth()->user()->hasRole('administrator');
+        });
+
+        // if the admin user is impersonating ...
+        Blade::if ('impersonating', function () {
+            return session()->has('impersonate');
+        });
+
         // if the user is subscribed do ...
         Blade::if ('subscribed', function () {
             return auth()->user()->isSubscribed();
