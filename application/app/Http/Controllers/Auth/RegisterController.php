@@ -3,6 +3,7 @@
 namespace SaaSrv\Http\Controllers\Auth;
 
 use SaaSrv\Models\User;
+use SaaSrv\Models\Role;
 use SaaSrv\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -86,6 +87,8 @@ class RegisterController extends Controller
      */
     protected function registered(\Illuminate\Http\Request $request, $user)
     {
+        $this->assingDefaultUserRole($user);
+
         // Log the user out
         $this->guard()->logout();
 
@@ -94,5 +97,24 @@ class RegisterController extends Controller
 
         return redirect($this->redirectPath())
                 ->withSuccess('Your account has been created. Please check your email for an activation link');
+    }
+
+    /**
+     * By default all new users should registered as cutomers.
+     *
+     * @param \SaaSrv\Models\User $user
+     * @return mixed    \SaaSrv\Models\User|bool
+     */
+    protected function assingDefaultUserRole(User $user)
+    {
+        $role = Role::where('name', 'customer')->first();
+
+        if (!$role) {
+            return false;
+        }
+
+        $user->roles()->attach($role->id);
+
+        return $user;
     }
 }
