@@ -17,7 +17,7 @@ class ActivationResendController extends Controller
      */
     public function index()
     {
-        return view('auth.activation.resend.index');
+        return view('auth.activation.resend');
     }
 
     public function send(ActivateResendRequest $request)

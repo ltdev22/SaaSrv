@@ -18,7 +18,7 @@ class PasswordController extends Controller
      */
     public function index()
     {
-        return view('account.password.index');
+        return view('account.password');
     }
 
     /**

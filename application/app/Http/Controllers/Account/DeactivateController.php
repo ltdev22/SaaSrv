@@ -16,7 +16,7 @@ class DeactivateController extends Controller
      */
     public function index()
     {
-        return view('account.deactivate.index');
+        return view('account.deactivate');
     }
 
     /**
