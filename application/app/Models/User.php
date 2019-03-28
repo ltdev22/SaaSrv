@@ -129,7 +129,7 @@ class User extends Authenticatable
      */
     public function hasBeenActivated(): bool
     {
-        return !is_null($this->activated_at);
+        return $this->activated_at instanceof \Carbon\Carbon;
     }
 
     /**
@@ -149,7 +149,7 @@ class User extends Authenticatable
      */
     public function isDeactivated(): bool
     {
-        return !is_null($this->deleted_at);
+        return this->deleted_at instanceof \Carbon\Carbon;
     }
 
     /**
