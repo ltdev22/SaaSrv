@@ -23,8 +23,10 @@ class UsersTableSeeder extends Seeder
             ],
         ];
 
+        \Schema::disableForeignKeyConstraints();
         DB::table('users')->truncate();
+        \Schema::enableForeignKeyConstraints();
 
-        Plan::insert($users);
+        User::insert($users);
     }
 }
